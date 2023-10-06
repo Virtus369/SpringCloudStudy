@@ -17,7 +17,7 @@ public class OrderService {
     public Order findOrderById(Long orderId){
 
         Order order = orderMapper.findOrderById(orderId);
-        String url = "http://localhost:8081/user/"+order.getUser_id() ;
+        String url = "http://userservice/user/"+order.getUser_id() ;
         User user = restTemplate.getForObject(url, User.class);
         order.setUser(user);
         return order;
