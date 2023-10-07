@@ -1,0 +1,46 @@
+server:
+  port: 10010
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka/
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://userservice
+          predicates:
+            - Path=/user/**
+        - id: order-service
+          uri: lb://orderservice
+          predicates:
+            - Path=/order/**
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+        add-to-simple-url-handler-mapping: true #??options????
+
+#globalcors: # ???????
+#  add-to-simple-url-handler-mapping: true # ??options???????
+#  corsConfigurations:
+#    '[/**]':
+#      allowedOrigins: # ???????????
+#        - "http://localhost:8090"
+#        - "http://www.leyou.com"
+#      allowedMethods: # ?????ajax?????
+#        - "GET"
+#        - "POST"
+#        - "DELETE"
+#        - "PUT"
+#        - "OPTIONS"
+#      allowedHeaders: "*" # ????????????
+#      allowCredentials: true # ??????cookie
+#      maxAge: 360000 # ??????????
